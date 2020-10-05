@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const verifyToken = require('./verifyToken');
+const verifyToken = require('../middlewares/verifyToken');
 
 
 //GET ROUTE
@@ -9,7 +9,6 @@ router.get('/', verifyToken, async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
-        console.log(req.userId);
     }
     catch (err) {
         res.json({ message: err });

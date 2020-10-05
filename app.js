@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config');
 
-mongoose.set('useCreateIndex', true);
-
 //Import routes
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
@@ -24,8 +22,8 @@ app.get('/', (req, res) => {
 
 //Connect to DB
 mongoose.connect(process.env.DB_AUTH,
-            {useNewUrlParser: true, useUnifiedTopology: true},
-            () => console.log('connected to DB'));
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+    () => console.log('connected to DB'));
 
 //START LISTENING
 app.listen(8000);
