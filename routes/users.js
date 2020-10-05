@@ -9,6 +9,7 @@ router.get('/', verifyToken, async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
+        console.log(req.userId);
     }
     catch (err) {
         res.json({ message: err });
@@ -30,10 +31,9 @@ router.get('/:userId', verifyToken, async (req, res) => {
 router.patch('/:userId', async (req, res) => {
     try {
         console.log(req.body.length);
-        for(let i=0; i<req.body.length; i++) {
+        for (let i = 0; i < req.body.length; i++) {
             let lelement = { [req.body[i].property]: req.body[i].value }
-            const savedUser = await User.findByIdAndUpdate(req.params.userId, { $set: lelement});
-            console.log(lelement);
+            const savedUser = await User.findByIdAndUpdate(req.params.userId, { $set: lelement });
         }
         const newUser = await User.findById(req.params.userId);
         res.json(newUser);
