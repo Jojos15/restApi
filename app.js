@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config');
 
+mongoose.set('useCreateIndex', true);
 
 //Import routes
 const usersRoute = require('./routes/users');
