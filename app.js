@@ -8,6 +8,7 @@ require('dotenv/config');
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const mailRoute = require('./routes/mail');
+const itemsRoute = require('./routes/items');
 
 //Middle-Wares
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/users', usersRoute);
 app.use('/users', authRoute);
 app.use('/mail', mailRoute);
+app.use('/items', itemsRoute);
 
 //ROUTES
 app.get('/', (req, res) => {
