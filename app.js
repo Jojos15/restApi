@@ -7,6 +7,7 @@ require('dotenv/config');
 //Import routes
 const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const mailRoute = require('./routes/mail');
 
 //Middle-Wares
 app.use(cors());
@@ -14,10 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/users', usersRoute);
 app.use('/users', authRoute);
+app.use('/mail', mailRoute);
 
 //ROUTES
 app.get('/', (req, res) => {
-    res.send("Kalosirthes Malaka");
+    res.send("Hey! REST API 🤖");
 })
 
 //Connect to DB
