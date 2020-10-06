@@ -16,10 +16,6 @@ module.exports = function (request, response, next) {
         passwordIsValid = /^([a-z0-9]{6,})$/.test(request.body.password);
     }
 
-    if (request.body.role != null) {
-        userRoleIsValid = roles.includes(request.body.role);
-    }
-
     if (usernameIsValid && emailIsValid && passwordIsValid) next();
     else {
 
