@@ -31,6 +31,6 @@ module.exports = function (request, response, next) {
             output.push({ message: "Password is Invalid" });
         }
 
-        response.status(401).send({ output });
+        response.status(400).send({ output });
     }
 }

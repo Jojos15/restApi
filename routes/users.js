@@ -28,7 +28,6 @@ router.get('/:userId', verifyToken, async (req, res) => {
 //UPDATE A USER
 router.patch('/:userId', async (req, res) => {
     try {
-        console.log(req.body.length);
         for (let i = 0; i < req.body.length; i++) {
             let lelement = { [req.body[i].property]: req.body[i].value }
             const savedUser = await User.findByIdAndUpdate(req.params.userId, { $set: lelement });
