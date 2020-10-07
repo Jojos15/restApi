@@ -9,15 +9,19 @@ const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const mailRoute = require('./routes/mail');
 const itemsRoute = require('./routes/items');
+const suppliersRoute = require('./routes/suppliers');
 
 //Middle-Wares
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+//Routes by Router
 app.use('/users', usersRoute);
 app.use('/users', authRoute);
 app.use('/mail', mailRoute);
 app.use('/items', itemsRoute);
+app.use('/suppliers', suppliersRoute);
 
 //ROUTES
 app.get('/', (req, res) => {

@@ -8,6 +8,9 @@ const supplierSchema = new mongoose.Schema({
     email: {
         type: String,
         match: [/\S+@\S+\.\S+/, 'is invalid']
+    },
+    phone: {
+        type: String, //TODO: Change type to something more suitable
     }
 });
 

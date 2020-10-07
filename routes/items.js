@@ -3,7 +3,7 @@ const router = express.Router();
 const Item = require('../models/Item');
 const verifyToken = require('../middlewares/VerifyToken');
 
-//!
+//! Task
 //TODO: Use VerifyToken
 //!
 
@@ -22,7 +22,7 @@ router.get('/:itemId', async (req, res) => {
         const specificItem = await Item.findById(req.params.itemId);
         res.json(specificItem);
     }
-    catch (err) {
+    catch (error) {
         res.status(500).send({ message: error });
     }
 });
@@ -47,14 +47,14 @@ router.post('/', async (req, res) => {
 
 router.patch('/:itemId', async (req, res) => {
     try {
-        let updatedItem;
+        let toUpdate;
         for (let i = 0; i < req.body.length; i++) {
             let lelement = { [req.body[i].property]: req.body[i].value }
-            updatedItem = await Item.findByIdAndUpdate(req.params.itemId, { $set: lelement }, { new: true });
+            toUpdate = await Item.findByIdAndUpdate(req.params.itemId, { $set: lelement }, { new: true });
         }
-        res.json(updatedItem);
+        res.json(toUpdate);
     }
-    catch (err) {
+    catch (error) {
         res.status(500).send({ message: error });
     }
 });
@@ -64,7 +64,7 @@ router.delete('/:itemId', async (req, res) => {
         const deletedItem = await User.findByIdAndDelete(req.params.itemId);
         res.json(deletedItem);
     }
-    catch (err) {
+    catch (error) {
         res.status(500).send({ message: error });
     }
 });
