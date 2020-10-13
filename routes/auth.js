@@ -47,15 +47,28 @@ router.post('/login', loginVal, async (request, response) => {
     )
 
     tokenData = jwt.verify(token, process.env.TOKEN_SECRET)
-    const loggedInUser = new LoggedInUser({
-        userId: tokenData.userId,
-        iat: tokenData.iat
-    });
 
-    try {
-        const savedLoggedInUser = await loggedInUser.save();
-    } catch (error) {
-        response.status(500).send(error);
+    // find if user is logged in
+    const foundLoggedInUser = await LoggedInUser.findOne({ userId: user._id });
+    console.log(foundLoggedInUser)
+    if (!foundLoggedInUser) {
+        // if user is not logged in add user to loggedIn list
+        const loggedInUser = new LoggedInUser({
+            userId: tokenData.userId,
+            iat: tokenData.iat
+        });
+        try {
+            await loggedInUser.save();
+        } catch (error) {
+            response.status(500).send(error);
+        }
+    }
+    else {
+        // if user is logged in update user's iat
+        console.log("user is logged in already")
+        foundLoggedInUser.iat = tokenData.iat
+        console.log(foundLoggedInUser)
+        foundLoggedInUser.save()
     }
 
     response.header('auth-token', token).send(token);
