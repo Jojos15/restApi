@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const loginVal = require('../middlewares/LogIn');
 const registerVal = require('../middlewares/Register');
+const LoggedInUser = require('../models/LoggedInUser');
 
 router.post('/register', registerVal, async (request, response) => {
 
@@ -44,6 +45,19 @@ router.post('/login', loginVal, async (request, response) => {
         { userId: userId },
         process.env.TOKEN_SECRET
     )
+
+    tokenData = jwt.verify(token, process.env.TOKEN_SECRET)
+    const loggedInUser = new LoggedInUser({
+        userId: tokenData.userId,
+        iat: tokenData.iat
+    });
+
+    try {
+        const savedLoggedInUser = await loggedInUser.save();
+        response.send({ userId: savedLoggedInUser.userId });
+    } catch (error) {
+        response.status(400).send(error);
+    }
 
     response.header('auth-token', token).send(token);
 })

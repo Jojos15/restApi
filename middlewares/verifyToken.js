@@ -8,6 +8,8 @@ module.exports = function (request, response, next) {
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+        console.log("Verified user:");
+        console.log(verified);
         request.userId = verified;
         next();
     } catch (err) {
