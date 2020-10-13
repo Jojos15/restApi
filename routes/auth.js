@@ -54,9 +54,8 @@ router.post('/login', loginVal, async (request, response) => {
 
     try {
         const savedLoggedInUser = await loggedInUser.save();
-        response.send({ userId: savedLoggedInUser.userId });
     } catch (error) {
-        response.status(400).send(error);
+        response.status(500).send(error);
     }
 
     response.header('auth-token', token).send(token);
