@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const loginVal = require('../middlewares/LogIn');
 const registerVal = require('../middlewares/Register');
 const LoggedInUser = require('../models/LoggedInUser');
+const Moment = require('moment');
 
 router.post('/register', registerVal, async (request, response) => {
 
@@ -48,26 +49,18 @@ router.post('/login', loginVal, async (request, response) => {
 
     tokenData = jwt.verify(token, process.env.TOKEN_SECRET)
 
-    // find if user is logged in
-    const foundLoggedInUser = await LoggedInUser.findOne({ userId: userId });
-    if (!foundLoggedInUser) {
-        // if user is not logged in add user to loggedIn list
-        const loggedInUser = new LoggedInUser({
-            userId: userId,
-            iat: tokenData.iat
-        });
-        try {
-            await loggedInUser.save();
-        } catch (error) {
-            response.status(500).send({ error: error });
-        }
+    // if user is not logged in add user to loggedIn list
+    const loggedInUser = new LoggedInUser({
+        userId: userId,
+        iat: tokenData.iat,
+        expireAt: Moment(tokenData.iat, 'X')
+    });
+    try {
+        await loggedInUser.save();
+    } catch (error) {
+        response.status(500).send({ error: error });
     }
-    else {
-        // if user is logged in update user's iat
-        console.log("user is logged in already")
-        foundLoggedInUser.iat = tokenData.iat
-        foundLoggedInUser.save()
-    }
+
 
     response.header('auth-token', token).send({ token: token })
 })

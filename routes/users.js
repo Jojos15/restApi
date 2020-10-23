@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const verifyToken = require('../middlewares/VerifyToken');
+const LoggedInUser = require('../models/LoggedInUser')
+
+
+router.get('/loggedin', async (req, res) => {
+    const loggedInUsers = await LoggedInUser.find();
+    res.status(200).send(loggedInUsers);
+})
 
 //GET ROUTE
 router.get('/', verifyToken, async (req, res) => {
