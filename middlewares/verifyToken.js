@@ -9,8 +9,6 @@ module.exports = async function (request, response, next) {
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        console.log("Verified user:");
-        console.log(verified);
         request.userId = verified;
 
         const user = await LoggedInUser.findOne({ userId: verified.userId, iat: verified.iat });

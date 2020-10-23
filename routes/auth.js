@@ -50,24 +50,22 @@ router.post('/login', loginVal, async (request, response) => {
 
     // find if user is logged in
     const foundLoggedInUser = await LoggedInUser.findOne({ userId: userId });
-    console.log(foundLoggedInUser)
     if (!foundLoggedInUser) {
         // if user is not logged in add user to loggedIn list
         const loggedInUser = new LoggedInUser({
-            userId: tokenData.userId,
+            userId: userId,
             iat: tokenData.iat
         });
         try {
             await loggedInUser.save();
         } catch (error) {
-            response.status(500).send(error);
+            response.status(500).send({ error: error });
         }
     }
     else {
         // if user is logged in update user's iat
         console.log("user is logged in already")
         foundLoggedInUser.iat = tokenData.iat
-        console.log(foundLoggedInUser)
         foundLoggedInUser.save()
     }
 
