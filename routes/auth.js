@@ -32,13 +32,13 @@ router.post('/login', loginVal, async (request, response) => {
 
     const user = await User.findOne({ username: request.body.username });
     if (!user) {
-        return response.status(400).send("Wrong username or password.");
+        return response.status(400).send({ message: "Wrong username or password." });
     }
     else userId = user._id;
 
     const correctPassword = await bcrypt.compare(request.body.password, user.password);
     if (!correctPassword) {
-        return response.status(400).send("Wrong username or password.");
+        return response.status(400).send({ message: "Wrong username or password." });
     }
 
     const token = jwt.sign(
@@ -49,7 +49,7 @@ router.post('/login', loginVal, async (request, response) => {
     tokenData = jwt.verify(token, process.env.TOKEN_SECRET)
 
     // find if user is logged in
-    const foundLoggedInUser = await LoggedInUser.findOne({ userId: user._id });
+    const foundLoggedInUser = await LoggedInUser.findOne({ userId: userId });
     console.log(foundLoggedInUser)
     if (!foundLoggedInUser) {
         // if user is not logged in add user to loggedIn list
@@ -71,7 +71,7 @@ router.post('/login', loginVal, async (request, response) => {
         foundLoggedInUser.save()
     }
 
-    response.header('auth-token', token).send(token);
+    response.header('auth-token', token).send({ token: token })
 })
 
 module.exports = router;

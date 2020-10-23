@@ -8,10 +8,6 @@ const loggedInUserSchema = new mongoose.Schema({
   iat: {
     type: Number,
     required: true
-  },
-  expiredat: {
-    type: Number,
-    required: true
   }
 })
 
