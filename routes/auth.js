@@ -5,7 +5,12 @@ const jwt = require('jsonwebtoken');
 const loginVal = require('../middlewares/LogIn');
 const registerVal = require('../middlewares/Register');
 const LoggedInUser = require('../models/LoggedInUser');
+const verifyToken = require('../middlewares/VerifyToken');
 const Moment = require('moment');
+
+router.post('/verifyToken', verifyToken, async (req, res) => {
+    res.status(200).send({ message: "Token is valid" })
+});
 
 router.post('/register', registerVal, async (request, response) => {
 

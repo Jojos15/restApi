@@ -18,7 +18,7 @@ app.use(express.json());
 
 //Routes by Router
 app.use('/users', usersRoute);
-app.use('/users', authRoute);
+app.use('/auth', authRoute);
 app.use('/mail', mailRoute);
 app.use('/items', itemsRoute);
 app.use('/suppliers', suppliersRoute);
