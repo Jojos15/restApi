@@ -8,8 +8,8 @@ const LoggedInUser = require('../models/LoggedInUser');
 const verifyToken = require('../middlewares/VerifyToken');
 const Moment = require('moment');
 
-router.post('/verifyToken', verifyToken, async (req, res) => {
-    res.status(200).send({ message: "Token is valid" })
+router.get('/verifyToken', verifyToken, async (req, res) => {
+    res.status(200).send({ message: 'Seems valid Token' });
 });
 
 router.post('/register', registerVal, async (request, response) => {

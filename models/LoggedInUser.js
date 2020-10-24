@@ -11,7 +11,7 @@ const loggedInUserSchema = new mongoose.Schema({
   },
   expireAt: {
     type: Date,
-    index: { expires: '12h' },
+    index: { expires: '60m' },
     required: true
   }
 })

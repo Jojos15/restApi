@@ -14,11 +14,12 @@ module.exports = async function (request, response, next) {
 
         const user = await LoggedInUser.findOne({ userId: verified.userId, iat: verified.iat });
         if (!user) {
-            response.status(401).send("User is not logged in.");
+            return response.status(401).send("User is not logged in.");
         }
+
         next();
 
     } catch (err) {
-        response.status(401).send("Access Denied 😈");
+        return response.status(401).send("Access Denied 😈");
     }
 }
